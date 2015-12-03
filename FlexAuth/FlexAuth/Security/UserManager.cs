@@ -76,13 +76,13 @@ namespace FlexAuth.Security
         public void SignIn(IUser user)
         {
             if (user == null)
-                throw new SecurityException("User cannot be null");
+                throw new SignInException("User cannot be null");
             else if (user.IsSignedIn())
-                throw new SecurityException("User already signed in");
+                throw new SignInException("User already signed in");
             else if (user.Credentials == null)
-                throw new SecurityException("Credentials cannot be null");
+                throw new SignInException("Credentials cannot be null");
             else if (!user.Credentials.Check())
-                throw new SecurityException("Invalid credentials");
+                throw new SignInException("Invalid credentials");
 
             Current = user;
         }
@@ -90,9 +90,9 @@ namespace FlexAuth.Security
         public void SignOut(IUser user)
         {
             if (user == null)
-                throw new SecurityException("User cannot be null");
+                throw new SignOutException("User cannot be null");
             else if (!user.Equals(Current))
-                throw new SecurityException("User must be signed in");
+                throw new SignOutException("User must be signed in");
 
             Current = null;
         }

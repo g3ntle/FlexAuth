@@ -47,7 +47,7 @@ namespace FlexAuth.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SecurityException))]
+        [ExpectedException(typeof(SignInException))]
         public void SignInShouldFail()
         {
             var mock = new Mock<ICredentials>();
@@ -60,7 +60,7 @@ namespace FlexAuth.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SecurityException))]
+        [ExpectedException(typeof(SignInException))]
         public void SignInShouldBeRedundant()
         {
             var mock = new Mock<ICredentials>();
@@ -89,10 +89,12 @@ namespace FlexAuth.Tests
 
             u.SignIn();
 
+            Assert.IsTrue(manager.HasUser, "User should be signed in");
             Assert.IsTrue(manager.HasPermission("One"), "User should have the \"One\" node");
             Assert.IsTrue(manager.HasPermission("Two"), "User should have the \"Two\" node");
 
             u.SignOut();
+            Assert.IsFalse(manager.HasUser, "User should be signed out");
             Assert.IsFalse(manager.HasPermission("One"), "User shouldn\'t have the \"One\" node");
             Assert.IsFalse(manager.HasPermission("Two"), "User shouldn\'t have the \"Two\" node");
         }

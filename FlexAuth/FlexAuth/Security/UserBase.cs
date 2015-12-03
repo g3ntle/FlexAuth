@@ -37,9 +37,9 @@ namespace FlexAuth.Security
                 UserManager.GetInstance().SignIn(this);
                 OnSignedIn();
             }
-            catch(SecurityException e)
+            catch(AuthException e)
             {
-                throw new SecurityException("Cannot sign in", e);
+                throw new SignInException("Cannot sign in", e);
             }
         }
 
@@ -50,9 +50,9 @@ namespace FlexAuth.Security
                 UserManager.GetInstance().SignOut(this);
                 OnSignedOut();
             }
-            catch(SecurityException e)
+            catch(AuthException e)
             {
-                throw new SecurityException("Unable to sign out", e);
+                throw new SignOutException("Unable to sign out", e);
             }
         }
 
