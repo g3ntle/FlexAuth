@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlexAuth.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +8,12 @@ using System.Windows.Input;
 
 namespace FlexAuth.Input
 {
-    public class SecureCommand : ICommand
+    public class AuthCommand : ICommand
     {
         #region Fields
 
         private readonly Action action;
+        private readonly string requiredNode;
 
         #endregion
 
@@ -25,10 +27,15 @@ namespace FlexAuth.Input
 
         #region Constructors
 
-        public SecureCommand(Action action)
+        public AuthCommand(Action action, string requiredNode)
         {
             this.action = action;
+            this.requiredNode = requiredNode;
         }
+
+        public AuthCommand(Action action)
+            : this(action, null)
+        { }
 
         #endregion
 
@@ -37,7 +44,10 @@ namespace FlexAuth.Input
 
         public virtual bool CanExecute(object parameter)
         {
-            return true;
+            if (String.IsNullOrEmpty(requiredNode))
+                return true;
+
+            return UserManager.GetInstance().HasPermission(requiredNode);
         }
 
         public virtual void Execute(object parameter)

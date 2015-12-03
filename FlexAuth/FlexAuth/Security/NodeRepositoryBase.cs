@@ -6,19 +6,45 @@ namespace FlexAuth.Security
 {
     public class NodeRepositoryBase : INodeRepository
     {
+        #region Constants
+
+        private const string Wildcard = "*";
+
+        #endregion
+
+
         #region Properties
 
-        public virtual IEnumerable<string> Nodes { get; set; }
+        private IEnumerable<string> _nodes;
+        public virtual IEnumerable<string> Nodes
+        {
+            get { return _nodes; }
+            set
+            {
+                _nodes = value;
+                _hasWildcard = HasNode(Wildcard, true);
+            }
+        }
+
+        private bool _hasWildcard;
+        public virtual bool HasWildcard
+        {
+            get { return _hasWildcard; }
+        }
 
         #endregion
 
         #region Methods
 
-        public virtual bool HasNode(string node)
+        public virtual bool HasNode(string node, bool ignore)
         {
-            return Nodes?.Contains(node) ?? false;
+            return ((ignore ? false : HasWildcard) ? true : Nodes?.Contains(node) ?? false);
         }
 
+        public virtual bool HasNode(string node)
+        {
+            return HasNode(node, false);
+        }
 
         #endregion
     }
