@@ -11,5 +11,12 @@ namespace FlexAuth.Security
         IEnumerable<string> Nodes { get; set; }
 
         #endregion
+
+
+        #region Methods
+
+        bool HasNode(string node);
+
+        #endregion
     }
 }

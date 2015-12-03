@@ -45,10 +45,10 @@
     <Compile Include="Security\ICredentials.cs" />
     <Compile Include="Security\INodeRepository.cs" />
     <Compile Include="Security\IUser.cs" />
+    <Compile Include="Security\NodeRepositoryBase.cs" />
     <Compile Include="Security\SecurityException.cs" />
-    <Compile Include="Security\Action.cs" />
     <Compile Include="Security\UserBase.cs" />
-    <Compile Include="Security\UserActionEventArgs.cs" />
+    <Compile Include="Security\UserEventArgs.cs" />
     <Compile Include="Security\UserManager.cs" />
   </ItemGroup>
   <ItemGroup />

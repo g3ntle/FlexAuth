@@ -19,8 +19,11 @@ namespace FlexAuth.Security
 
         #region Events
 
-        public delegate void UserActionHandler(object sender, UserActionEventArgs e);
-        public event UserActionHandler UserAction;
+        public delegate void UserSignedInHandler(object sender, UserEventArgs e);
+        public event UserSignedInHandler UserSignedIn;
+
+        public delegate void UserSignedOutHandler(object sender, UserEventArgs e);
+        public event UserSignedOutHandler UserSignedOut;
 
         #endregion
 
@@ -37,13 +40,13 @@ namespace FlexAuth.Security
                 _current = value;
 
                 if (previous == null && _current != null)
-                    OnUserAction(_current, Action.Login);
+                    OnUserSignedIn(_current);
                 else if (previous != null && _current == null)
-                    OnUserAction(previous, Action.Logout);
+                    OnUserSignedOut(previous);
                 else if (previous != null && _current != null)
                 {
-                    OnUserAction(previous, Action.Logout);
-                    OnUserAction(_current, Action.Login);
+                    OnUserSignedOut(previous);
+                    OnUserSignedIn(_current);
                 }
 
                 _current = value;
@@ -60,25 +63,43 @@ namespace FlexAuth.Security
 
         #region Methods
 
-        protected void OnUserAction(IUser user, Action action)
+        protected void OnUserSignedIn(IUser user)
         {
-            UserAction?.Invoke(this, new UserActionEventArgs(user, action));
+            UserSignedIn?.Invoke(this, new UserEventArgs(user));
         }
 
-        public void Login(IUser user)
+        protected void OnUserSignedOut(IUser user)
         {
-            if (user == null
-             || user.GetCredentials() == null)
-                throw new SecurityException("User and/or credentials cannot be null");
-            else if (!user.GetCredentials().Check())
-                throw new SecurityException("Invalid user and/or credentials");
+            UserSignedOut?.Invoke(this, new UserEventArgs(user));
+        }
+
+        public void SignIn(IUser user)
+        {
+            if (user == null)
+                throw new SecurityException("User cannot be null");
+            else if (user.IsSignedIn())
+                throw new SecurityException("User already signed in");
+            else if (user.Credentials == null)
+                throw new SecurityException("Credentials cannot be null");
+            else if (!user.Credentials.Check())
+                throw new SecurityException("Invalid credentials");
 
             Current = user;
         }
 
-        public void Logout()
+        public void SignOut(IUser user)
         {
+            if (user == null)
+                throw new SecurityException("User cannot be null");
+            else if (!user.Equals(Current))
+                throw new SecurityException("User must be signed in");
+
             Current = null;
+        }
+
+        public bool HasPermission(string node)
+        {
+            return Current?.HasPermission(node) ?? false;
         }
 
         public static UserManager GetInstance()

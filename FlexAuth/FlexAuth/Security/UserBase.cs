@@ -6,34 +6,76 @@ namespace FlexAuth.Security
     {
         #region Fields
 
-        private ICredentials credentials;
+        private bool isSignedIn = false;
 
         #endregion
 
 
-        #region Constructors
+        #region Events
 
-        public UserBase(ICredentials credentials)
-        {
-            if (credentials == null)
-                throw new ArgumentNullException("credentials");
+        public event EventHandler SignedIn;
+        public event EventHandler SignedOut;
 
-            this.credentials = credentials;
-        }
+        #endregion
+
+
+        #region Properties
+
+        public ICredentials Credentials { get; set; }
+        public INodeRepository Nodes { get; set; }
+        public object MetaData { get; set; }
 
         #endregion
 
 
         #region Methods
 
-        public virtual void Login()
+        public void SignIn()
         {
-            UserManager.GetInstance().Login(this);
+            try
+            {
+                UserManager.GetInstance().SignIn(this);
+                OnSignedIn();
+            }
+            catch(SecurityException e)
+            {
+                throw new SecurityException("Cannot sign in", e);
+            }
         }
 
-        public ICredentials GetCredentials()
+        public void SignOut()
         {
-            return credentials;
+            try
+            {
+                UserManager.GetInstance().SignOut(this);
+                OnSignedOut();
+            }
+            catch(SecurityException e)
+            {
+                throw new SecurityException("Unable to sign out", e);
+            }
+        }
+
+        public bool IsSignedIn()
+        {
+            return isSignedIn;
+        }
+
+        public bool HasPermission(string node)
+        {
+            return Nodes?.HasNode(node) ?? false;
+        }
+
+        protected void OnSignedIn()
+        {
+            isSignedIn = true;
+            SignedIn?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected void OnSignedOut()
+        {
+            isSignedIn = false;
+            SignedOut?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
