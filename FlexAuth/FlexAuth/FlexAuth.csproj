@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Input\AuthCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Generic\DummyNodeRepository.cs" />
     <Compile Include="Security\ICredentials.cs" />
     <Compile Include="Security\INodeRepository.cs" />
     <Compile Include="Security\IUser.cs" />
