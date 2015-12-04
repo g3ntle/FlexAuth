@@ -35,6 +35,7 @@ namespace FlexAuth.Tests
         [TestMethod]
         public void SignInShouldSucceed()
         {
+            manager.CleanUp();
             var mock = new Mock<ICredentials>();
 
             mock.Setup(m => m.Check())
@@ -50,6 +51,7 @@ namespace FlexAuth.Tests
         [ExpectedException(typeof(SignInException))]
         public void SignInShouldFail()
         {
+            manager.CleanUp();
             var mock = new Mock<ICredentials>();
 
             mock.Setup(m => m.Check())
@@ -63,6 +65,7 @@ namespace FlexAuth.Tests
         [ExpectedException(typeof(SignInException))]
         public void SignInShouldBeRedundant()
         {
+            manager.CleanUp();
             var mock = new Mock<ICredentials>();
 
             mock.Setup(m => m.Check())
@@ -76,6 +79,7 @@ namespace FlexAuth.Tests
         [TestMethod]
         public void SignInAndOutShouldSucceed()
         {
+            manager.CleanUp();
             var mock = new Mock<ICredentials>();
 
             mock.Setup(m => m.Check())

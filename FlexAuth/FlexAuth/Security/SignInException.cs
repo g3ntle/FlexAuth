@@ -4,6 +4,8 @@ namespace FlexAuth.Security
 {
     public class SignInException : AuthException
     {
+        #region Cosntructors
+
         public SignInException()
             : base()
         { }
@@ -12,8 +14,18 @@ namespace FlexAuth.Security
             : base(message)
         { }
 
+        public SignInException(string message, int errorCode)
+            : base(message, errorCode)
+        { }
+
         public SignInException(string message, Exception innerException)
             : base(message, innerException)
         { }
+
+        public SignInException(string message, int errorCode, Exception innerException)
+            : base(message, errorCode, innerException)
+        { }
+
+        #endregion
     }
 }

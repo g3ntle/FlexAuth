@@ -39,7 +39,7 @@ namespace FlexAuth.Security
             }
             catch(AuthException e)
             {
-                throw new SignInException("Cannot sign in", e);
+                throw new SignInException("Cannot sign in", e.ErrorCode, e);
             }
         }
 
@@ -52,7 +52,7 @@ namespace FlexAuth.Security
             }
             catch(AuthException e)
             {
-                throw new SignOutException("Unable to sign out", e);
+                throw new SignOutException("Unable to sign out", e.ErrorCode, e);
             }
         }
 

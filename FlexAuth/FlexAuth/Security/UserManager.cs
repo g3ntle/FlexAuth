@@ -76,23 +76,24 @@ namespace FlexAuth.Security
         public void SignIn(IUser user)
         {
             if (user == null)
-                throw new SignInException("User cannot be null");
-            else if (user.IsSignedIn())
-                throw new SignInException("User already signed in");
+                throw new SignInException("User cannot be null", 100);
+            else if (Current?.IsSignedIn() ?? false)
+                throw new SignInException("User already signed in", 101);
             else if (user.Credentials == null)
-                throw new SignInException("Credentials cannot be null");
+                throw new SignInException("Credentials cannot be null", 102);
             else if (!user.Credentials.Check())
-                throw new SignInException("Invalid credentials");
+                throw new SignInException("Invalid credentials", 103);
 
+            user.MetaData = user.Credentials.MetaData;
             Current = user;
         }
 
         public void SignOut(IUser user)
         {
             if (user == null)
-                throw new SignOutException("User cannot be null");
+                throw new SignOutException("User cannot be null", 200);
             else if (!user.Equals(Current))
-                throw new SignOutException("User must be signed in");
+                throw new SignOutException("User must be signed in", 201);
 
             Current = null;
         }
@@ -100,6 +101,11 @@ namespace FlexAuth.Security
         public bool HasPermission(string node)
         {
             return Current?.HasPermission(node) ?? false;
+        }
+
+        public void CleanUp()
+        {
+            Current = null;
         }
 
         public static UserManager GetInstance()
