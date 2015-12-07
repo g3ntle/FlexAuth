@@ -4,22 +4,10 @@ namespace FlexAuth.Security
 {
     public class SignOutException : AuthException
     {
-        #region Cosntructors
-
-        public SignOutException()
-            : base()
-        { }
-
-        public SignOutException(string message)
-            : base(message)
-        { }
+        #region Constructors
 
         public SignOutException(string message, int errorCode)
             : base(message, errorCode)
-        { }
-
-        public SignOutException(string message, Exception innerException)
-            : base(message, innerException)
         { }
 
         public SignOutException(string message, int errorCode, Exception innerException)

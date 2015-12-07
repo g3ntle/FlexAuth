@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FlexAuth</id>
+    <version>2.0.0</version>
+    <authors>robhendriks</authors>
+    <licenseUrl>https://github.com/robhendriks/FlexAuth/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/robhendriks/FlexAuth</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/robhendriks/FlexAuth/master/doc/flex-64x64.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Flexible authentication.</description>
+    <releaseNotes></releaseNotes>
+    <tags>authentication</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="WindowsBase"/>
+      <frameworkAssembly assemblyName="PresentationCore"/>
+      <frameworkAssembly assemblyName="PresentationFramework"/>
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="..\src\FlexAuth\bin\Release\FlexAuth.dll" target="lib\FlexAuth.dll"/>
+  </files>
+</package>

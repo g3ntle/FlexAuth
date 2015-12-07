@@ -48,7 +48,7 @@
     <Compile Include="Security\INodeRepository.cs" />
     <Compile Include="Security\IUser.cs" />
     <Compile Include="Security\NodeRepositoryBase.cs" />
-    <Compile Include="AuthException.cs" />
+    <Compile Include="Security\AuthException.cs" />
     <Compile Include="Security\SignInException.cs" />
     <Compile Include="Security\SignOutException.cs" />
     <Compile Include="Security\UserBase.cs" />
