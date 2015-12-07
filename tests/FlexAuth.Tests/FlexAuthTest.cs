@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace FlexAuth.Tests
 {
     [TestClass]
-    public class UserManagerTest
+    public class FlexAuthTest
     {
         #region Fields
 

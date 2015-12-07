@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FlexAuth.Runnable")]
+[assembly: AssemblyTitle("FlexAuth.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FlexAuth.Runnable")]
+[assembly: AssemblyProduct("FlexAuth.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e53122ff-d1f0-424d-9e04-ccca1da119fc")]
+[assembly: Guid("f6d07b53-5500-483f-8571-6dbd4e63b6e5")]
 
 // Version information for an assembly consists of the following four values:
 //
