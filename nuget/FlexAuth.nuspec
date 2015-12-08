@@ -2,11 +2,11 @@
 <package >
   <metadata>
     <id>FlexAuth</id>
-    <version>2.0.0</version>
-    <authors>robhendriks</authors>
-    <licenseUrl>https://github.com/robhendriks/FlexAuth/blob/master/LICENSE.txt</licenseUrl>
-    <projectUrl>https://github.com/robhendriks/FlexAuth</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/robhendriks/FlexAuth/master/doc/flex-64x64.png</iconUrl>
+    <version>2.1.0</version>
+    <authors>g3ntle</authors>
+    <licenseUrl>https://github.com/g3ntle/FlexAuth/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/g3ntle/FlexAuth</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/g3ntle/FlexAuth/master/docs/flex-64x64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Flexible authentication.</description>
     <releaseNotes></releaseNotes>

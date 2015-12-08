@@ -1,1 +1,3 @@
 # FlexAuth
+
+**Flexible authentication**
