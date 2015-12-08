@@ -12,6 +12,9 @@ namespace FlexAuth.Security.Spoofing
 
         private readonly UserManager parent;
 
+        private string argString;
+        private string credArgString;
+
         #endregion
 
 
@@ -47,17 +50,12 @@ namespace FlexAuth.Security.Spoofing
 
         private void Initialize()
         {
-            var str = ConfigurationManager.AppSettings["Spoofing"]?.ToString();
-            if (String.IsNullOrEmpty(str))
+            argString = ConfigurationManager.AppSettings["Spoofing"]?.ToString();
+            if (String.IsNullOrEmpty(argString))
                 return;
-
-            var args = str.GetValues();
-            if (args == null)
-                throw new SpoofException(new NullReferenceException("Args can\'t be null"));
 
             try
             {
-                _args = Bean.Populate<SpoofArgs>(args);
                 Spoof();
             }
             catch (Exception ex)
@@ -68,50 +66,54 @@ namespace FlexAuth.Security.Spoofing
 
         private void Spoof()
         {
-            if (_args == null)
-                new NullReferenceException("Args can\'t be null");
-
-            var user = CreateUser(_args.UserType);
-            var cred = CreateCredentials(_args.CredentialsType);
-
-            var str = ConfigurationManager.AppSettings["Credentials"]?.ToString();
-            if (String.IsNullOrEmpty(str))
-                throw new NullReferenceException("No credentials supplied");
-
-            var args = str.GetValues();
+            // Parse arguments
+            var args = argString.GetValues();
             if (args == null)
                 throw new NullReferenceException("Args can\'t be null");
 
-            cred.Populate(args);
+            // Populate arguments object
+            _args = Bean.Populate<SpoofArgs>(args);
 
+            // Get types from entry assembly
+            var asm = Assembly.GetEntryAssembly();
+            var userType = asm.GetType(_args?.UserType);
+            var credType = asm.GetType(_args?.CredentialsType);
+
+            // Check userType for null and inheritance
+            if (userType == null)
+                throw new NullReferenceException($"Invalid user type {_args.UserType ?? "n/a"}");
+            else if(!typeof(IUser).IsAssignableFrom(userType))
+                throw new InvalidCastException($"Type {userType} doesn\'t implement IUser");
+
+            // Check credType for null and inheritance
+            if (credType == null)
+                throw new NullReferenceException($"Invalid credentials type {_args.CredentialsType ?? "n/a"}");
+            else if (!typeof(ICredentials).IsAssignableFrom(credType))
+                throw new InvalidCastException($"Type {credType} doesn\'t implement ICredentials");
+
+            // Create runtime objects from gathered types
+            var user = Activator.CreateInstance(userType) as IUser;
+            var cred = Activator.CreateInstance(credType) as ICredentials;
+
+            // Get credential arguments string
+            credArgString = ConfigurationManager.AppSettings["Credentials"]?.ToString();
+
+            // Parse credential arguments
+            var credArgs = credArgString?.GetValues();
+            if (args == null)
+                throw new NullReferenceException("Args can\'t be null");
+
+            // Populate credentials
+            cred.Populate(credArgs, credType);
+
+            // Asign
             _user = user;
             _user.Credentials = cred;
         }
 
-        private IUser CreateUser(string typeName)
+        public void SignIn()
         {
-            var asm = Assembly.GetEntryAssembly();
-            var type = asm.GetTypeByName(typeName);
-
-            if (type == null)
-                throw new NullReferenceException($"Type {typeName} doesn\'t exist");
-            else if (!type.IsSubclassOf(typeof(IUser)))
-                new InvalidCastException($"Type {type} doesn\'t implement IUser");
-
-            return Activator.CreateInstance(type) as IUser;
-        }
-
-        private ICredentials CreateCredentials(string typeName)
-        {
-            var asm = Assembly.GetEntryAssembly();
-            var type = asm.GetTypeByName(typeName);
-
-            if (type == null)
-                throw new NullReferenceException($"Type {typeName} doesn\'t exist");
-            else if (!type.IsSubclassOf(typeof(ICredentials)))
-                new InvalidCastException($"Type {type} doesn\'t implement ICredentials");
-
-            return Activator.CreateInstance(type) as ICredentials;
+            User?.SignIn();
         }
 
         #endregion

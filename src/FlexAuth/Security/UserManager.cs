@@ -9,7 +9,8 @@ namespace FlexAuth.Security
 
         private static UserManager instance;
 
-        private readonly Spoofer spoofer;
+        private Spoofer spoofer;
+        private bool isSpoofed;
 
         #endregion
 
@@ -17,7 +18,7 @@ namespace FlexAuth.Security
 
         private UserManager()
         {
-            spoofer = new Spoofer(this);
+            Initialize();
         }
 
         #endregion
@@ -81,6 +82,12 @@ namespace FlexAuth.Security
 
 
         #region Methods
+
+        private void Initialize()
+        {
+            spoofer = new Spoofer(this);
+            isSpoofed = (spoofer.User != null);
+        }
 
         protected void OnUserSignedIn(IUser user)
         {
