@@ -6,7 +6,7 @@
     <authors>g3ntle</authors>
     <licenseUrl>https://github.com/g3ntle/FlexAuth/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/g3ntle/FlexAuth</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/g3ntle/FlexAuth/master/docs/flex-64x64.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/g3ntle/FlexAuth/master/docs/icon-64x64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Flexible authentication.</description>
     <releaseNotes></releaseNotes>
