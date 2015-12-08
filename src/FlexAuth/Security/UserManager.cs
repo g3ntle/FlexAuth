@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlexAuth.Security.Spoofing;
+using System;
 
 namespace FlexAuth.Security
 {
@@ -8,11 +9,16 @@ namespace FlexAuth.Security
 
         private static UserManager instance;
 
+        private readonly Spoofer spoofer;
+
         #endregion
 
         #region Constructors
 
-        private UserManager() { }
+        private UserManager()
+        {
+            spoofer = new Spoofer(this);
+        }
 
         #endregion
 
@@ -29,6 +35,11 @@ namespace FlexAuth.Security
 
 
         #region Properties
+
+        public Spoofer Spoofer
+        {
+            get { return spoofer; }
+        }
 
         private IUser _current;
         public IUser Current
@@ -56,6 +67,14 @@ namespace FlexAuth.Security
         public bool HasUser
         {
             get { return Current != null; }
+        }
+
+        public static UserManager Instance
+        {
+            get
+            {
+                return instance ?? (instance = new UserManager());
+            }
         }
 
         #endregion
@@ -98,6 +117,11 @@ namespace FlexAuth.Security
             Current = null;
         }
 
+        public T GetUserMetaDataAs<T>() where T : class
+        {
+            return Current?.Convert<T>();
+        }
+
         public bool HasPermission(string node)
         {
             return Current?.HasPermission(node) ?? false;
@@ -106,11 +130,6 @@ namespace FlexAuth.Security
         public void CleanUp()
         {
             Current = null;
-        }
-
-        public static UserManager GetInstance()
-        {
-            return instance ?? (instance = new UserManager());
         }
 
         #endregion

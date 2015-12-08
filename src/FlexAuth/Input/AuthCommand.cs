@@ -47,7 +47,7 @@ namespace FlexAuth.Input
             if (String.IsNullOrEmpty(requiredNode))
                 return true;
 
-            return UserManager.GetInstance().HasPermission(requiredNode);
+            return UserManager.Instance.HasPermission(requiredNode);
         }
 
         public virtual void Execute(object parameter)

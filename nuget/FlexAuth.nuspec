@@ -11,6 +11,9 @@
     <description>Flexible authentication.</description>
     <releaseNotes></releaseNotes>
     <tags>authentication</tags>
+	<dependencies>
+		<dependency  id="Beans" version="1.0.0"/>
+	</dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="WindowsBase"/>
       <frameworkAssembly assemblyName="PresentationCore"/>

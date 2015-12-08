@@ -26,6 +26,7 @@ namespace FlexAuth.Security
         void SignIn();
         bool IsSignedIn();
         bool HasPermission(string node);
+        T Convert<T>() where T : class;
 
         #endregion
     }

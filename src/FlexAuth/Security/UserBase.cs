@@ -34,7 +34,7 @@ namespace FlexAuth.Security
         {
             try
             {
-                UserManager.GetInstance().SignIn(this);
+                UserManager.Instance.SignIn(this);
                 OnSignedIn();
             }
             catch(AuthException e)
@@ -47,7 +47,7 @@ namespace FlexAuth.Security
         {
             try
             {
-                UserManager.GetInstance().SignOut(this);
+                UserManager.Instance.SignOut(this);
                 OnSignedOut();
             }
             catch(AuthException e)
@@ -64,6 +64,11 @@ namespace FlexAuth.Security
         public bool HasPermission(string node)
         {
             return Nodes?.HasNode(node) ?? false;
+        }
+
+        public T Convert<T>() where T : class
+        {
+            return (MetaData != null && MetaData is T ? (T)MetaData : null);
         }
 
         protected void OnSignedIn()

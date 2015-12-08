@@ -30,7 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Beans, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Beans.1.0.0\lib\Beans.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,9 +56,17 @@
     <Compile Include="Security\AuthException.cs" />
     <Compile Include="Security\SignInException.cs" />
     <Compile Include="Security\SignOutException.cs" />
+    <Compile Include="Security\Spoofing\SpoofArgs.cs" />
+    <Compile Include="Security\Spoofing\Spoofer.cs" />
+    <Compile Include="Security\Spoofing\SpoofException.cs" />
     <Compile Include="Security\UserBase.cs" />
     <Compile Include="Security\UserEventArgs.cs" />
     <Compile Include="Security\UserManager.cs" />
+    <Compile Include="Utility\AssemblyHelper.cs" />
+    <Compile Include="Utility\StringUtility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
